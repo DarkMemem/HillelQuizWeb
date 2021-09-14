@@ -1,10 +1,10 @@
-from django.db import models
 
+from django.db import models
 from django.contrib.auth import get_user_model
 
 from core.models import BaseModel
 from core.utils import generate_uuid
-
+from accounts.models import CustomUser
 
 class Exam(BaseModel):
     QUESTION_MIN_LIMIT = 3
@@ -65,6 +65,13 @@ class Result(BaseModel):
         for z in zip(selected_choices, correct_choice):
             correct_answer &= (z[0] == z[1])
 
+        """
+            true    true        true
+            true    false       false
+            false   true        false
+            false   false       false
+        """
+
         self.num_correct_answers += int(correct_answer)
         self.num_incorrect_answers += 1 - int(correct_answer)
 
@@ -72,3 +79,22 @@ class Result(BaseModel):
             self.state = self.STATE.FINISHED
 
         self.save()
+
+    def update_rating(self):
+        qwery = self.user.rating
+        self.user.rating = qwery + (self.num_correct_answers - self.num_incorrect_answers)
+        self.user.save()
+        return self.user.rating
+
+
+    def print_rate(self):
+        return self.num_correct_answers / (self.num_correct_answers + self.num_incorrect_answers) * 100
+
+    def print_time(self):
+        return self.update_timestamp - self.create_timestamp
+
+    def print_points(self):
+        if self.num_correct_answers - self.num_incorrect_answers <= 0:
+            return 0
+        else:
+            return self.num_correct_answers - self.num_incorrect_answers

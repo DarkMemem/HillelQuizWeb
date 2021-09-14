@@ -1,10 +1,11 @@
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Exam, Result, Question
+from .models import Exam, Question, Result
 from .forms import ChoicesFormset
 
 
@@ -63,7 +64,7 @@ class ExamQuestionView(LoginRequiredMixin, UpdateView):
             'exams/question.html',
             context={
                 'question': question,
-                'choices': choices,
+                'choices': choices
             }
         )
 
@@ -104,7 +105,7 @@ class ExamQuestionView(LoginRequiredMixin, UpdateView):
 
 class ExamResultDetailView(LoginRequiredMixin, DetailView):
     model = Result
-    template_name = 'results/details.html'
+    template_name = 'result/details.html'
     context_object_name = 'result'
     pk_url_kwarg = 'uuid'
 

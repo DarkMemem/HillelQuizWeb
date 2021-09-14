@@ -30,6 +30,22 @@
                             <td>Результат</td>
                             <td>{{ result.num_correct_answers }} / {{ result.num_incorrect_answers }}</td>
                         </tr>
+                        <tr>
+                            <td>Success rate %</td>
+                            <td>{{ result.print_rate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Время прохождения теста</td>
+                            <td>{{ result.print_time }}</td>
+                        </tr>
+                        tr>
+                            <td>Баллы</td>
+                            <td>{{ result.print_points }}</td>
+                        </tr>
+                        tr>
+                            <td>Рейтинг</td>
+                            <td>{{ result.update_rating }}</td>
+                        </tr>
                     </tbody>
               </table>
             </div>

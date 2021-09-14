@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Exam, Question, Choice, Result
+from .models import Exam, Choice, Question, Result
 from .forms import ChoiceInlineFormSet, QuestionInlineFormSet
 
 
@@ -13,7 +13,7 @@ class ChoiceInline(admin.TabularInline):
 
 
 class QuestionAdmin(admin.ModelAdmin):
-    inlines = (ChoiceInline, )
+    inlines = (ChoiceInline,)
 
 
 class QuestionInline(admin.TabularInline):
@@ -31,6 +31,6 @@ class ExamAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Exam, ExamAdmin)
-admin.site.register(Question, QuestionAdmin)
 admin.site.register(Choice)
+admin.site.register(Question, QuestionAdmin)
 admin.site.register(Result)
